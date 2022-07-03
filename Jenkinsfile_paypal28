@@ -1,0 +1,30 @@
+node{
+def mavenHome = tool name: 'maven3.8.6' 
+stage('1cloneCode'){
+   sh "echo running a software build and deployment project for paypal"
+   git "https://github.com/dumochama/maven-web-application"   
+}
+stage('2Test&Build'){
+   sh "${mavenHome}/bin/mvn install"
+}
+/*
+stage('3CodeQuality'){
+   sh "${mavenHome}/bin/mvn sonar:sonar"
+}
+stage('4UploadArtifacts'){
+   sh "${mavenHome}/bin/mvn deploy"
+}
+stage('5deploy_uat'){
+ deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://54.205.7.169:8080')], contextPath: null, onFailure: false, war: 'target/*wa
+}
+stage('6deploy_prod'){
+deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://54.205.7.169:8080')], contextPath: null, onFailure: false, war: 'target/*war'
+}
+stage('7Notification'){
+emailext body: '''Build Status for frontend application.
+
+Regards,
+2M Global''', recipientProviders: [buildUser(), developers(), contributor()], subject: 'Build Status', to: 'dumochama@gmail.com'
+}
+*/
+}
